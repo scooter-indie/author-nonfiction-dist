@@ -1,10 +1,10 @@
 {
   "framework": "AI-Assisted Nonfiction Authoring",
-  "frameworkVersion": "{{VERSION}}",
+  "frameworkVersion": "0.14.2",
   "installedVersion": null,
   "installedDate": null,
-  "releaseDate": "{{RELEASE_DATE}}",
-  "releaseUrl": "https://github.com/scooter-indie/author-nonfiction/releases/tag/v{{VERSION}}",
-  "updateHistory": [],
-  "appliedMigrations": []
+  "releaseDate": "$(date +%Y-%m-%d)",
+  "releaseUrl": "https://github.com/scooter-indie/author-nonfiction/releases/tag/v0.14.2",
+  "distributionRepo": "https://github.com/scooter-indie/author-nonfiction-dist",
+  "sourceRepo": "https://github.com/scooter-indie/author-nonfiction"
 }

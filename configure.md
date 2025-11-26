@@ -1,6 +1,6 @@
 # Framework Configuration
 
-**AI-Assisted Nonfiction Authoring Framework v0.14.1**
+**AI-Assisted Nonfiction Authoring Framework v0.14.2**
 
 ---
 
@@ -525,22 +525,27 @@ git remote get-url origin 2>/dev/null | grep -q "author-nonfiction-dist" && echo
 
 **If `DIST_CLONE=true`:**
 
-Rename `origin` to `upstream` so user can add their own remote later:
+Rename `origin` to `upstream` and disable push (users can't push to dist repo):
 
 **If in Claude Code CLI:** Execute directly:
 ```bash
-git remote rename origin upstream
+git remote rename origin upstream && git remote set-url --push upstream no-push-access
 ```
 
 **If in Claude Desktop:** Provide this command:
 ```
-git remote rename origin upstream
+git remote rename origin upstream && git remote set-url --push upstream no-push-access
 ```
 
 Report:
 ```
 ✓ Distribution repo detected
-✓ Remote renamed: origin → upstream
+✓ Remote renamed: origin → upstream (fetch-only)
+
+Result:
+$ git remote -v
+upstream  https://github.com/scooter-indie/author-nonfiction-dist.git (fetch)
+upstream  no-push-access (push)
 
 Framework updates: git pull upstream main
 Your book repo: git remote add origin [your-repo-url]
@@ -711,8 +716,8 @@ Continue to Step 8.
 I will update `.config/manifest.json`:
 ```json
 {
-  "frameworkVersion": "0.14.1",
-  "installedVersion": "0.14.1",
+  "frameworkVersion": "0.14.2",
+  "installedVersion": "0.14.2",
   "installedDate": "[current-date]",
   "lastUpdated": "[current-date]",
   "installationMethod": "configure.md",
@@ -733,8 +738,8 @@ I will:
 4. Update manifest:
 ```json
 {
-  "frameworkVersion": "0.14.1",
-  "installedVersion": "0.14.1",
+  "frameworkVersion": "0.14.2",
+  "installedVersion": "0.14.2",
   "installedDate": "[original-date-preserved]",
   "lastUpdated": "[current-date]",
   "installationMethod": "configure.md",
@@ -755,7 +760,7 @@ I will:
 
 **For New Installations:**
 ```bash
-git add . && git commit -m "Initialize nonfiction framework v0.14.1
+git add . && git commit -m "Initialize nonfiction framework v0.14.2
 
 🤖 Generated with [Claude Code](https://claude.com/claude-code)
 
@@ -764,7 +769,7 @@ Co-Authored-By: Claude <noreply@anthropic.com>"
 
 **For Updates:**
 ```bash
-git add . && git commit -m "Update framework to v0.14.1
+git add . && git commit -m "Update framework to v0.14.2
 
 See CHANGELOG.md for details.
 
@@ -777,7 +782,7 @@ Co-Authored-By: Claude <noreply@anthropic.com>"
 
 **For New Installations:**
 ```
-git add . && git commit -m "Initialize nonfiction framework v0.14.1
+git add . && git commit -m "Initialize nonfiction framework v0.14.2
 
 🤖 Generated with [Claude Code](https://claude.com/claude-code)
 
@@ -786,7 +791,7 @@ Co-Authored-By: Claude <noreply@anthropic.com>"
 
 **For Updates:**
 ```
-git add . && git commit -m "Update framework to v0.14.1
+git add . && git commit -m "Update framework to v0.14.2
 
 See CHANGELOG.md for details.
 
@@ -811,13 +816,18 @@ I will provide:
 ```
 ✅ Configuration Complete!
 
-Framework v0.14.1 installed successfully.
+Framework v0.14.2 installed successfully.
 
 📁 Current directory: [pwd-result]
 🔧 Git repository: Initialized
 🌐 Remote repository: [Connected to X / Not configured / Working locally]
 ⬆️ Framework updates: [If cloned from dist: "git pull upstream main" / Otherwise: omit this line]
 ✅ Book writing assistant: Ready
+
+⚠️ IMPORTANT: At the start of every FUTURE Claude Code session, run:
+   /fw-init
+   This loads the framework and prepares Claude for prompt execution.
+   For THIS session, you're already set up and ready to proceed.
 
 📚 Next Steps:
 
@@ -842,7 +852,7 @@ Framework v0.14.1 installed successfully.
 ```
 ✅ Framework Updated Successfully!
 
-Updated from v[old] to v0.14.1
+Updated from v[old] to v0.14.2
 
 📁 Current directory: [pwd-result]
 🔧 Git repository: Update committed
@@ -851,6 +861,11 @@ Updated from v[old] to v0.14.1
 
 📋 What Changed:
 [Display relevant sections from CHANGELOG.md]
+
+⚠️ IMPORTANT: At the start of every FUTURE Claude Code session, run:
+   /fw-init
+   This loads the framework and prepares Claude for prompt execution.
+   For THIS session, you're already set up and ready to proceed.
 
 📚 Next Steps:
 
@@ -881,7 +896,7 @@ The following required files are missing:
 This suggests the framework was not fully extracted.
 
 Solutions:
-1. Re-extract nonfiction-v0.14.1.zip to this directory
+1. Re-extract nonfiction-v0.14.2.zip to this directory
 2. Ensure all files are extracted (not just some)
 3. Check file permissions
 
@@ -975,5 +990,5 @@ When the book-writing-assistant agent starts, it will ask you to confirm the cur
 
 ---
 
-*Framework Version: 0.14.1*
+*Framework Version: 0.14.2*
 *Configuration Script: configure.md*

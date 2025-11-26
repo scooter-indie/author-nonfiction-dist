@@ -6,6 +6,12 @@ Thumbs.db
 .vscode/
 .idea/
 *.swp
+*.swo
+*~
+
+# Temporary files
+*.tmp
+*.bak
 
 # User-specific (not in dist repo)
 .claude/settings.local.json
