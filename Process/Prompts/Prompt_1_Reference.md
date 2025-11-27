@@ -1,6 +1,6 @@
 # Prompt 1 Reference Documentation
 
-**Version:** 0.15.0
+**Version:** 0.14.3
 **Purpose:** Detailed Q&A examples, config formats, and troubleshooting
 
 ---
@@ -82,6 +82,39 @@ Which style? (1-2)
 
 > "2 - Conversational Expert"
 
+---
+
+### Disclaimer Acknowledgment (After Q&A)
+
+**Display disclaimer header:**
+```
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+⚠️  DISCLAIMER ACKNOWLEDGMENT REQUIRED
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Before creating your book project, you must acknowledge
+the framework disclaimer.
+```
+
+**Then display full contents of `Process/DISCLAIMER.md`**
+
+**Ask:**
+```
+To proceed, type exactly: I acknowledge the disclaimer
+```
+
+> "I acknowledge the disclaimer"
+
+**If user refuses or types something else:**
+```
+Acknowledgment required to proceed. Please type exactly:
+I acknowledge the disclaimer
+
+Or type "cancel" to abort initialization.
+```
+
+---
+
 **Alternative - If user says "all":**
 ```
 All 19 styles:
@@ -134,7 +167,7 @@ Which style? (1-19)
 
 ### `.config/init.json`
 
-**Required fields:** `title`, `author`, `style`, `chapters`, `createdDate`
+**Required fields:** `title`, `author`, `style`, `chapters`, `createdDate`, `disclaimer_acknowledged`, `disclaimer_version`, `acknowledged_date`
 
 ```json
 {
@@ -159,7 +192,10 @@ Which style? (1-19)
   ],
   "style": "Conversational Expert",
   "createdDate": "2025-11-24",
-  "frameworkVersion": "0.15.0"
+  "frameworkVersion": "0.14.3",
+  "disclaimer_acknowledged": true,
+  "disclaimer_version": "1.0",
+  "acknowledged_date": "2025-11-24"
 }
 ```
 
@@ -173,7 +209,7 @@ Which style? (1-19)
   "settings": {
     "prompt_9_verbose": true
   },
-  "frameworkVersion": "0.15.0",
+  "frameworkVersion": "0.14.3",
   "createdDate": "2025-11-24",
   "lastModified": "2025-11-24"
 }
@@ -221,7 +257,7 @@ Which style? (1-19)
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "description": "Framework installation manifest",
-  "frameworkVersion": "0.15.0",
+  "frameworkVersion": "0.14.3",
   "installedDate": "2025-11-24",
   "lastUpdated": "2025-11-24",
   "installationMethod": "Prompt 1",
@@ -289,7 +325,7 @@ Which style? (1-19)
 
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Nonfiction Framework Initialization Script v0.15.0
+Nonfiction Framework Initialization Script v0.14.3
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Validating preconditions...
@@ -330,7 +366,7 @@ Initializing git repository...
 
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Batch Content Generator v0.15.0
+Batch Content Generator v0.14.3
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Validating preconditions...
@@ -458,5 +494,5 @@ During initialization:
 
 ---
 
-**Version:** 0.15.0
+**Version:** 0.14.3
 **For Core Workflow:** See `Prompt_1_Initialize.md`
