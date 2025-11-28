@@ -2,7 +2,7 @@
 
 ################################################################################
 # Batch Content Generator for Prompt 1
-# Version: 0.15.1
+# Version: 0.15.2
 #
 # Purpose: Generate ALL content files from init.json in single operation
 # Usage:
@@ -34,8 +34,8 @@ if [[ -n "$FW_ROOT" ]]; then
     PROJECT_ROOT="$BOOK_PATH"
     MULTI_BOOK_MODE=true
     echo -e "${BLUE}Mode: Multi-book${NC}"
-    echo -e "  Framework: $FRAMEWORK_ROOT"
-    echo -e "  Book path: $BOOK_PATH"
+    printf "  Framework: %s\n" "$FRAMEWORK_ROOT"
+    printf "  Book path: %s\n" "$BOOK_PATH"
 else
     # Legacy mode: script and project in same location
     FRAMEWORK_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
@@ -98,7 +98,7 @@ validate_preconditions() {
 
     # Check if Process/Styles directory exists (in FRAMEWORK_ROOT)
     if [[ ! -d "$FRAMEWORK_ROOT/Process/Styles" ]]; then
-        echo -e "${RED}✗ Process/Styles directory not found at $FRAMEWORK_ROOT${NC}"
+        printf "${RED}✗ Process/Styles directory not found at %s${NC}\n" "$FRAMEWORK_ROOT"
         ((errors++))
     else
         echo -e "${GREEN}✓ Process/Styles directory found${NC}"
@@ -679,7 +679,7 @@ print_summary() {
 
 main() {
     echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-    echo -e "${BLUE}Batch Content Generator v0.15.0${NC}"
+    echo -e "${BLUE}Batch Content Generator v0.15.2${NC}"
     echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
     echo ""
 

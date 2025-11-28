@@ -87,4 +87,4 @@ Then run `execute configure.md` to apply any migrations.
 
 ---
 
-**Version:** 0.15.1 | [Changelog](CHANGELOG.md)
+**Version:** 0.15.2 | [Changelog](CHANGELOG.md)
