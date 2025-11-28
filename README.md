@@ -4,47 +4,54 @@
 
 ---
 
-## Quick Start
+## Quick Start (v0.16.0+)
 
-### Option A: Single Book (Simplest)
-
-```bash
-# 1. Clone the framework to your book project
-git clone https://github.com/scooter-indie/author-nonfiction-dist.git my-book
-cd my-book
-
-# 2. Start Claude Code
-claude
-
-# 3. Configure and initialize (say these in Claude Code)
-execute configure.md
-execute Prompt 1
-```
-
-After setup, start each session with `/fw-init`.
-
-### Option B: Multi-Book Setup (Recommended for Multiple Books)
-
-This setup separates the framework from your books, allowing you to:
-- Manage multiple book projects from one framework installation
-- Update the framework without touching your books
-- Switch between books easily
+### 1. Clone the Framework
 
 ```bash
-# 1. Clone framework to a permanent location
-git clone https://github.com/scooter-indie/author-nonfiction-dist.git ~/nonfiction-framework
-cd ~/nonfiction-framework
-
-# 2. Start Claude Code and configure
-claude
-execute configure.md
+git clone https://github.com/scooter-indie/author-nonfiction-dist.git ~/Downloads/author-nonfiction
 ```
 
-Configuration will ask where to store your books (BOOKS_ROOT). After setup:
-- **Windows:** Double-click `start-authoring.bat` to launch
-- **macOS/Linux:** Run `./start-authoring.sh` to launch
+### 2. Run Setup Script
 
-The start script opens Claude Code in your books directory and reminds you to run `/fw-init`.
+**Windows:**
+```batch
+cd %USERPROFILE%\Downloads\author-nonfiction
+configure.bat
+```
+
+**macOS/Linux:**
+```bash
+cd ~/Downloads/author-nonfiction
+./configure.sh
+```
+
+### 3. Follow Setup Prompts
+
+The setup will:
+- Ask where to create your PROJECT_ROOT (writing environment)
+- Create the unified directory structure
+- Initialize git repository
+- Chain to start-authoring automatically
+
+### 4. Create Your First Book
+
+After setup completes, say: `Execute Prompt 1`
+
+---
+
+## Architecture (v0.16.0+)
+
+```
+PROJECT_ROOT/
+├── FW_ROOT/              # Framework (cloned, gitignored)
+├── BOOKS_ROOT/           # Your books
+│   ├── [Book-Name]/
+│   └── Archive/
+├── .config/              # Configuration
+├── start-authoring.*     # Startup scripts
+└── .gitignore
+```
 
 ---
 
@@ -61,11 +68,12 @@ The start script opens Claude Code in your books directory and reminds you to ru
 
 ## Session Workflow
 
-```bash
-# Start each session
-/fw-init
+Start sessions with the startup script:
+- **Windows:** `start-authoring.bat` from PROJECT_ROOT
+- **macOS/Linux:** `./start-authoring.sh` from PROJECT_ROOT
 
-# Common commands
+Common commands:
+```
 execute Prompt 3    # Apply changes from _chg files
 execute Prompt 4    # Interactive editing
 execute Prompt 10   # View progress dashboard
@@ -88,13 +96,15 @@ execute Prompt 8    # Consistency check
 
 ## Updating
 
+Framework updates are checked automatically on `/fw-init`. To update manually:
+
 ```bash
-cd ~/nonfiction-framework  # or wherever you cloned
+cd PROJECT_ROOT/FW_ROOT
 git pull origin main
 ```
 
-Then run `execute configure.md` to apply any migrations.
+Then run `/fw-init` to apply any migrations.
 
 ---
 
-**Version:** 0.15.4 | [Changelog](CHANGELOG.md)
+**Version:** 0.16.0 | [Changelog](CHANGELOG.md)
