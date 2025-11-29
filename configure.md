@@ -1,6 +1,6 @@
 # Framework Configuration
 
-**AI-Assisted Nonfiction Authoring Framework v0.16.0**
+**AI-Assisted Nonfiction Authoring Framework v0.16.1**
 
 ---
 
@@ -26,7 +26,7 @@ This configuration script sets up the unified PROJECT_ROOT architecture:
 **Fresh Install (from cloned FW_ROOT):**
 1. Ask for PROJECT_ROOT location
 2. Create PROJECT_ROOT directory structure
-3. Set up BOOKS_ROOT subdirectory
+3. Set up books directory
 4. Create CONFIG_ROOT (.config/) with all files
 5. Generate startup scripts
 6. Initialize git repository
@@ -49,7 +49,7 @@ PROJECT_ROOT/
 ├── bp-start-authoring.*     # Bypass-permissions startup
 ├── FW_ROOT/                 # Framework (cloned from -dist)
 │   └── (framework files)
-├── BOOKS_ROOT/              # Your books
+├── My-Books/                # Your books (default name)
 │   ├── [Book-1]/
 │   ├── [Book-2]/
 │   └── Archive/
@@ -100,11 +100,39 @@ git --version
 
 ---
 
+### Step 0.6: Bash Syntax for File/Directory Checks
+
+**IMPORTANT:** When checking if files or directories exist, use **bash syntax** (not Windows CMD).
+
+**Correct bash syntax:**
+```bash
+# Check if file exists
+test -f "path/to/file" && echo "EXISTS" || echo "NOT_EXISTS"
+
+# Check if directory exists
+test -d "path/to/directory" && echo "EXISTS" || echo "NOT_EXISTS"
+
+# Check if path exists (file or directory)
+test -e "path" && echo "EXISTS" || echo "NOT_EXISTS"
+```
+
+**NEVER use Windows CMD syntax** like `if exist "path" (echo EXISTS)` - this will fail in bash.
+
+---
+
 ### Step 1: Installation Mode Detection
 
 **Detect which mode to use based on current directory:**
 
-Check for these indicators:
+Check for these indicators using bash:
+
+```bash
+# Check for VERSION file (indicates FW_ROOT)
+test -f "VERSION" && echo "VERSION_EXISTS" || echo "VERSION_NOT_FOUND"
+
+# Check for fw-location.json (indicates CONFIG_ROOT)
+test -f "fw-location.json" && echo "FW_LOCATION_EXISTS" || echo "FW_LOCATION_NOT_FOUND"
+```
 
 1. **VERSION file exists?** → Running from cloned FW_ROOT (Fresh Install)
 2. **fw-location.json exists?** → Running from CONFIG_ROOT (Update/Reconfigure)
@@ -168,7 +196,7 @@ Where would you like to create your writing environment?
 
 PROJECT_ROOT will contain:
   • FW_ROOT/ - Framework files (cloned from this location)
-  • BOOKS_ROOT/ - All your book projects
+  • [Books directory]/ - All your book projects
   • .config/ - Configuration files
   • Git repository for your content
 
@@ -183,16 +211,55 @@ Enter path for PROJECT_ROOT:
 
 **WAIT for user response.** Store as `PROJECT_ROOT`.
 
-**Validate:**
+**Validate using bash:**
+```bash
+# Check if PROJECT_ROOT already exists
+test -e "[PROJECT_ROOT]" && echo "PATH_EXISTS" || echo "PATH_AVAILABLE"
+
+# Check if parent directory exists (extract parent from path)
+test -d "$(dirname "[PROJECT_ROOT]")" && echo "PARENT_EXISTS" || echo "PARENT_NOT_FOUND"
+```
+
+**Validation rules:**
 - Path must not already exist (or must be empty)
 - Parent directory must exist and be writable
+
+**If validation fails:** Show appropriate error from Error Handling section.
+
+### 2A.1.5: Books Directory Name
+
+**⏸️ ASK USER:**
+
+```
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Books Directory Name
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+What would you like to name your books directory?
+
+This will be created at: [actual PROJECT_ROOT path]/[name]/
+
+Enter name [My-Books]:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```
+
+**WAIT for user response.**
+- If empty/Enter: Use default "My-Books"
+- Otherwise: Use provided name
+
+**Validate name:**
+- No spaces (suggest hyphens instead)
+- No special characters except hyphens and underscores
+- Not empty after trimming
+
+Store as `BOOKS_DIR_NAME`. The full path will be `[PROJECT_ROOT]/[BOOKS_DIR_NAME]`.
 
 ### 2A.2: Create PROJECT_ROOT Directory Structure
 
 ```bash
 mkdir -p "[PROJECT_ROOT]"
-mkdir -p "[PROJECT_ROOT]/BOOKS_ROOT"
-mkdir -p "[PROJECT_ROOT]/BOOKS_ROOT/Archive"
+mkdir -p "[PROJECT_ROOT]/[BOOKS_DIR_NAME]"
+mkdir -p "[PROJECT_ROOT]/[BOOKS_DIR_NAME]/Archive"
 mkdir -p "[PROJECT_ROOT]/.config"
 mkdir -p "[PROJECT_ROOT]/.config/.claude/agents"
 mkdir -p "[PROJECT_ROOT]/.config/.claude/commands"
@@ -264,7 +331,7 @@ Write to `[PROJECT_ROOT]/.config/fw-location.json`.
 
 ```json
 {
-  "booksRoot": "[PROJECT_ROOT]/BOOKS_ROOT",
+  "booksRoot": "[PROJECT_ROOT]/[BOOKS_DIR_NAME]",
   "github": {
     "enabled": false,
     "repository": null,
@@ -362,7 +429,7 @@ chmod +x "[PROJECT_ROOT]/bp-start-authoring.sh"
 
 ### 2A.8: Create Archive README
 
-Copy `[FW_ROOT]/Process/Templates/Archive_README_template.md` to `[PROJECT_ROOT]/BOOKS_ROOT/Archive/README.md`.
+Copy `[FW_ROOT]/Process/Templates/Archive_README_template.md` to `[PROJECT_ROOT]/[BOOKS_DIR_NAME]/Archive/README.md`.
 
 ### 2A.9: Initialize Git Repository
 
@@ -423,7 +490,7 @@ git commit -m "Initialize writing environment
 Created by AI-Assisted Nonfiction Authoring Framework v[FW_VERSION]
 
 Structure:
-- BOOKS_ROOT/ for book projects
+- [BOOKS_DIR_NAME]/ for book projects
 - .config/ for configuration
 - FW_ROOT/ excluded (separate repo)
 
@@ -441,7 +508,7 @@ Co-Authored-By: Claude <noreply@anthropic.com>"
 
 PROJECT_ROOT: [PROJECT_ROOT path]
 ├── FW_ROOT/: [FW_ROOT path]
-├── BOOKS_ROOT/: [PROJECT_ROOT]/BOOKS_ROOT
+├── [BOOKS_DIR_NAME]/: [PROJECT_ROOT]/[BOOKS_DIR_NAME]
 └── .config/: [PROJECT_ROOT]/.config
 
 Framework Version: [FW_VERSION]
@@ -453,7 +520,7 @@ Created:
   ✓ .config/CLAUDE.md
   ✓ .config/.claude/commands/ (fw-init, switch-book, manage-book)
   ✓ .config/.claude/agents/ (book-writing-assistant)
-  ✓ BOOKS_ROOT/Archive/
+  ✓ [BOOKS_DIR_NAME]/Archive/
   ✓ .gitignore (excludes FW_ROOT/)
   ✓ start-authoring scripts
   ✓ Git repository initialized
@@ -580,7 +647,7 @@ Next steps:
 ### 2C.1: Read Current Configuration
 
 Read `fw-location.json` to get FW_ROOT path.
-Read `settings.json` to get BOOKS_ROOT path.
+Read `settings.json` to get books directory path (booksRoot).
 Read `books-registry.json` to get book list.
 
 ### 2C.2: Present Options
@@ -595,7 +662,7 @@ Configuration Options
 Current configuration:
   PROJECT_ROOT: [parent of CONFIG_ROOT]
   FW_ROOT: [from fw-location.json]
-  BOOKS_ROOT: [from settings.json]
+  Books directory: [from settings.json booksRoot]
   Books: [N] registered
 
 What would you like to do?
@@ -705,13 +772,13 @@ What would you like to do?
 - `.gitignore` - Excludes FW_ROOT/
 - `start-authoring.*` - Launch scripts
 - `FW_ROOT/` - Framework (separate git repo, excluded from PROJECT_ROOT's git)
-- `BOOKS_ROOT/` - Your books
+- `[BOOKS_DIR_NAME]/` - Your books (default: My-Books)
 - `.config/` - Configuration (CONFIG_ROOT)
 
 ### What Gets Tracked in Git
 
 **In PROJECT_ROOT git:**
-- ✅ BOOKS_ROOT/ (all book content)
+- ✅ [BOOKS_DIR_NAME]/ (all book content)
 - ✅ .config/ (configuration files)
 - ✅ start-authoring scripts
 - ❌ FW_ROOT/ (excluded via .gitignore - it's a separate repo)
@@ -731,5 +798,5 @@ Manual check: Run this configure.md from CONFIG_ROOT.
 
 ---
 
-*Framework Version: 0.16.0*
+*Framework Version: 0.16.1*
 *Configuration Script: configure.md*
