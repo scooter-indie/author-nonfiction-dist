@@ -107,4 +107,4 @@ Then run `/fw-init` to apply any migrations.
 
 ---
 
-**Version:** 0.16.0 | [Changelog](CHANGELOG.md)
+**Version:** 0.16.1 | [Changelog](CHANGELOG.md)
